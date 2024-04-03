@@ -22,7 +22,7 @@ abstract class TpchQuery {
   /**
    * Implemented in children classes and holds the actual query
    */
-  def execute(spark: SparkSession, tpchSchemaProvider: TpchSchemaProvider): DataFrame
+  def execute(spark: SparkSession, tpchSchemaProvider: TpchParquetSchemaProvider): DataFrame
 }
 
 object TpchQuery {
@@ -36,7 +36,7 @@ object TpchQuery {
     }
   }
 
-  def executeQueries(spark: SparkSession, schemaProvider: TpchSchemaProvider, queryNum: Option[Int], queryOutputDir: String): ListBuffer[(String, Float)] = {
+  def executeQueries(spark: SparkSession, schemaProvider: TpchParquetSchemaProvider, queryNum: Option[Int], queryOutputDir: String): ListBuffer[(String, Float)] = {
     var queryFrom = 1;
     var queryTo = 22;
     queryNum match {
@@ -95,7 +95,7 @@ object TpchQuery {
       .builder
       .appName("TPC-H v3.0.0 Spark")
       .getOrCreate()
-    val schemaProvider = new TpchSchemaProvider(spark, inputDataDir)
+    val schemaProvider = new TpchParquetSchemaProvider(spark, inputDataDir)
 
     // execute queries
     val executionTimes = executeQueries(spark, schemaProvider, queryNum, queryOutputDir)

@@ -5,7 +5,7 @@ import org.apache.spark.sql.functions._
 
 class Q02 extends TpchQuery {
 
-  override def execute(spark: SparkSession, schemaProvider: TpchSchemaProvider): DataFrame = {
+  override def execute(spark: SparkSession, schemaProvider: TpchParquetSchemaProvider): DataFrame = {
     import spark.implicits._
     import schemaProvider._
 
